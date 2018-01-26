@@ -1,5 +1,13 @@
 ﻿@inherits UmbracoViewPage
 
+@using Umbraco.Core.Models
+@using Umbraco.Web.Models
+
+@{ 
+    RelatedLink titleLink = Umbraco.AssignedContentItem.GetPropertyValue<RelatedLinks>("titleLink").FirstOrDefault();
+}
+
+
 <header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(images/img_bg_1.jpg);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
@@ -7,11 +15,15 @@
             <div class="col-md-7 text-left">
                 <div class="display-t">
                     <div class="display-tc animate-box" data-animate-effect="fadeInUp">
-                        <h1 class="mb30">Get ready to celebrate our Taranaki lifestyle!</h1>
-                        <p>
-                            <a href="http://gettemplates.co/" target="_blank" class="btn btn-primary">Get Started</a>  <em class="or">or</em>
-                            <a href="https://vimeo.com/channels/staffpicks/93951774" class="link-watch popup-vimeo">Watch Video</a>
-                        </p>
+                        <h1 class="mb30">@Umbraco.Field("pageTitle", altFieldAlias: "pageName")</h1>
+                        @if (titleLink != null && !string.IsNullOrEmpty(titleLink.Link))
+                        {
+                            <p>
+                                <a href="@titleLink.Link" target="_blank" class="btn btn-primary">@titleLink.Caption</a>  <em class="or">or</em>
+                                <a href="https://vimeo.com/channels/staffpicks/93951774" class="link-watch popup-vimeo">Watch Video</a>
+                            </p>
+                        }
+
                     </div>
                 </div>
             </div>

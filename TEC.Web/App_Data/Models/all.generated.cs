@@ -8,7 +8,7 @@ using  Umbraco.Web;
 using  Umbraco.ModelsBuilder;
 using  Umbraco.ModelsBuilder.Umbraco;
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "c16d378746003e16")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "90456bc805553a84")]
 [assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
 
 
@@ -42,7 +42,7 @@ namespace Umbraco.Web.PublishedContentModels
 {
 	/// <summary>Home</summary>
 	[PublishedContentModel("home")]
-	public partial class Home : PublishedContentModel
+	public partial class Home : PublishedContentModel, IBasicIntroControls, IBasicTitleControls, IFeaturedItemsControls, IFooterContentControls
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "home";
@@ -64,11 +64,101 @@ namespace Umbraco.Web.PublishedContentModels
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
+
+		///<summary>
+		/// Intro Content: Enter the intro content
+		///</summary>
+		[ImplementPropertyType("introContent")]
+		public string IntroContent
+		{
+			get { return Umbraco.Web.PublishedContentModels.BasicIntroControls.GetIntroContent(this); }
+		}
+
+		///<summary>
+		/// Intro Light: Enter a short sentence to bring up the topic
+		///</summary>
+		[ImplementPropertyType("introLight")]
+		public string IntroLight
+		{
+			get { return Umbraco.Web.PublishedContentModels.BasicIntroControls.GetIntroLight(this); }
+		}
+
+		///<summary>
+		/// Intro Title: Enter the title of the intro
+		///</summary>
+		[ImplementPropertyType("introTitle")]
+		public string IntroTitle
+		{
+			get { return Umbraco.Web.PublishedContentModels.BasicIntroControls.GetIntroTitle(this); }
+		}
+
+		///<summary>
+		/// Page Title: If left blank, the name of the page will be used
+		///</summary>
+		[ImplementPropertyType("pageTitle")]
+		public string PageTitle
+		{
+			get { return Umbraco.Web.PublishedContentModels.BasicTitleControls.GetPageTitle(this); }
+		}
+
+		///<summary>
+		/// Sub Title
+		///</summary>
+		[ImplementPropertyType("subTitle")]
+		public string SubTitle
+		{
+			get { return Umbraco.Web.PublishedContentModels.BasicTitleControls.GetSubTitle(this); }
+		}
+
+		///<summary>
+		/// Title Link: Enter the link in here if you want to show a link under the title
+		///</summary>
+		[ImplementPropertyType("titleLink")]
+		public Umbraco.Web.Models.RelatedLinks TitleLink
+		{
+			get { return Umbraco.Web.PublishedContentModels.BasicTitleControls.GetTitleLink(this); }
+		}
+
+		///<summary>
+		/// Featured Items: Enter the featured items to display in the feature section
+		///</summary>
+		[ImplementPropertyType("featuredItems")]
+		public Archetype.Models.ArchetypeModel FeaturedItems
+		{
+			get { return Umbraco.Web.PublishedContentModels.FeaturedItemsControls.GetFeaturedItems(this); }
+		}
+
+		///<summary>
+		/// Footer Content
+		///</summary>
+		[ImplementPropertyType("footerContent")]
+		public IHtmlString FooterContent
+		{
+			get { return Umbraco.Web.PublishedContentModels.FooterContentControls.GetFooterContent(this); }
+		}
+
+		///<summary>
+		/// Footer Social Links
+		///</summary>
+		[ImplementPropertyType("footerSocialLinks")]
+		public Umbraco.Web.Models.RelatedLinks FooterSocialLinks
+		{
+			get { return Umbraco.Web.PublishedContentModels.FooterContentControls.GetFooterSocialLinks(this); }
+		}
+
+		///<summary>
+		/// Footer Title
+		///</summary>
+		[ImplementPropertyType("footerTitle")]
+		public string FooterTitle
+		{
+			get { return Umbraco.Web.PublishedContentModels.FooterContentControls.GetFooterTitle(this); }
+		}
 	}
 
 	/// <summary>Contact</summary>
 	[PublishedContentModel("contact")]
-	public partial class Contact : PublishedContentModel
+	public partial class Contact : PublishedContentModel, IBasicTitleControls, IUmbracoUrlAliasControls
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "contact";
@@ -90,6 +180,397 @@ namespace Umbraco.Web.PublishedContentModels
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
+
+		///<summary>
+		/// Page Title: If left blank, the name of the page will be used
+		///</summary>
+		[ImplementPropertyType("pageTitle")]
+		public string PageTitle
+		{
+			get { return Umbraco.Web.PublishedContentModels.BasicTitleControls.GetPageTitle(this); }
+		}
+
+		///<summary>
+		/// Sub Title
+		///</summary>
+		[ImplementPropertyType("subTitle")]
+		public string SubTitle
+		{
+			get { return Umbraco.Web.PublishedContentModels.BasicTitleControls.GetSubTitle(this); }
+		}
+
+		///<summary>
+		/// Title Link: Enter the link in here if you want to show a link under the title
+		///</summary>
+		[ImplementPropertyType("titleLink")]
+		public Umbraco.Web.Models.RelatedLinks TitleLink
+		{
+			get { return Umbraco.Web.PublishedContentModels.BasicTitleControls.GetTitleLink(this); }
+		}
+
+		///<summary>
+		/// Umbraco Url Alias: Enter an alternate url in here. Please note that the values you use must be lowercase, not use a leading slash and not use a trailing ".aspx" or trailing slash. If you are adding multiple values, they must be separated with a comma.
+		///</summary>
+		[ImplementPropertyType("umbracoUrlAlias")]
+		public string UmbracoUrlAlias
+		{
+			get { return Umbraco.Web.PublishedContentModels.UmbracoUrlAliasControls.GetUmbracoUrlAlias(this); }
+		}
+	}
+
+	// Mixin content Type 1059 with alias "umbracoUrlAliasControls"
+	/// <summary>Umbraco Url Alias Controls</summary>
+	public partial interface IUmbracoUrlAliasControls : IPublishedContent
+	{
+		/// <summary>Umbraco Url Alias</summary>
+		string UmbracoUrlAlias { get; }
+	}
+
+	/// <summary>Umbraco Url Alias Controls</summary>
+	[PublishedContentModel("umbracoUrlAliasControls")]
+	public partial class UmbracoUrlAliasControls : PublishedContentModel, IUmbracoUrlAliasControls
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "umbracoUrlAliasControls";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public UmbracoUrlAliasControls(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<UmbracoUrlAliasControls, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Umbraco Url Alias: Enter an alternate url in here. Please note that the values you use must be lowercase, not use a leading slash and not use a trailing ".aspx" or trailing slash. If you are adding multiple values, they must be separated with a comma.
+		///</summary>
+		[ImplementPropertyType("umbracoUrlAlias")]
+		public string UmbracoUrlAlias
+		{
+			get { return GetUmbracoUrlAlias(this); }
+		}
+
+		/// <summary>Static getter for Umbraco Url Alias</summary>
+		public static string GetUmbracoUrlAlias(IUmbracoUrlAliasControls that) { return that.GetPropertyValue<string>("umbracoUrlAlias"); }
+	}
+
+	// Mixin content Type 1061 with alias "basicTitleControls"
+	/// <summary>Basic Title Controls</summary>
+	public partial interface IBasicTitleControls : IPublishedContent
+	{
+		/// <summary>Page Title</summary>
+		string PageTitle { get; }
+
+		/// <summary>Sub Title</summary>
+		string SubTitle { get; }
+
+		/// <summary>Title Link</summary>
+		Umbraco.Web.Models.RelatedLinks TitleLink { get; }
+	}
+
+	/// <summary>Basic Title Controls</summary>
+	[PublishedContentModel("basicTitleControls")]
+	public partial class BasicTitleControls : PublishedContentModel, IBasicTitleControls
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "basicTitleControls";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public BasicTitleControls(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<BasicTitleControls, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Page Title: If left blank, the name of the page will be used
+		///</summary>
+		[ImplementPropertyType("pageTitle")]
+		public string PageTitle
+		{
+			get { return GetPageTitle(this); }
+		}
+
+		/// <summary>Static getter for Page Title</summary>
+		public static string GetPageTitle(IBasicTitleControls that) { return that.GetPropertyValue<string>("pageTitle"); }
+
+		///<summary>
+		/// Sub Title
+		///</summary>
+		[ImplementPropertyType("subTitle")]
+		public string SubTitle
+		{
+			get { return GetSubTitle(this); }
+		}
+
+		/// <summary>Static getter for Sub Title</summary>
+		public static string GetSubTitle(IBasicTitleControls that) { return that.GetPropertyValue<string>("subTitle"); }
+
+		///<summary>
+		/// Title Link: Enter the link in here if you want to show a link under the title
+		///</summary>
+		[ImplementPropertyType("titleLink")]
+		public Umbraco.Web.Models.RelatedLinks TitleLink
+		{
+			get { return GetTitleLink(this); }
+		}
+
+		/// <summary>Static getter for Title Link</summary>
+		public static Umbraco.Web.Models.RelatedLinks GetTitleLink(IBasicTitleControls that) { return that.GetPropertyValue<Umbraco.Web.Models.RelatedLinks>("titleLink"); }
+	}
+
+	// Mixin content Type 1062 with alias "basicIntroControls"
+	/// <summary>Basic Intro Controls</summary>
+	public partial interface IBasicIntroControls : IPublishedContent
+	{
+		/// <summary>Intro Content</summary>
+		string IntroContent { get; }
+
+		/// <summary>Intro Light</summary>
+		string IntroLight { get; }
+
+		/// <summary>Intro Title</summary>
+		string IntroTitle { get; }
+	}
+
+	/// <summary>Basic Intro Controls</summary>
+	[PublishedContentModel("basicIntroControls")]
+	public partial class BasicIntroControls : PublishedContentModel, IBasicIntroControls
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "basicIntroControls";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public BasicIntroControls(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<BasicIntroControls, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Intro Content: Enter the intro content
+		///</summary>
+		[ImplementPropertyType("introContent")]
+		public string IntroContent
+		{
+			get { return GetIntroContent(this); }
+		}
+
+		/// <summary>Static getter for Intro Content</summary>
+		public static string GetIntroContent(IBasicIntroControls that) { return that.GetPropertyValue<string>("introContent"); }
+
+		///<summary>
+		/// Intro Light: Enter a short sentence to bring up the topic
+		///</summary>
+		[ImplementPropertyType("introLight")]
+		public string IntroLight
+		{
+			get { return GetIntroLight(this); }
+		}
+
+		/// <summary>Static getter for Intro Light</summary>
+		public static string GetIntroLight(IBasicIntroControls that) { return that.GetPropertyValue<string>("introLight"); }
+
+		///<summary>
+		/// Intro Title: Enter the title of the intro
+		///</summary>
+		[ImplementPropertyType("introTitle")]
+		public string IntroTitle
+		{
+			get { return GetIntroTitle(this); }
+		}
+
+		/// <summary>Static getter for Intro Title</summary>
+		public static string GetIntroTitle(IBasicIntroControls that) { return that.GetPropertyValue<string>("introTitle"); }
+	}
+
+	/// <summary>Images List Controls</summary>
+	[PublishedContentModel("imagesListControls")]
+	public partial class ImagesListControls : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "imagesListControls";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public ImagesListControls(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<ImagesListControls, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Images List: Choose the images to show in the list
+		///</summary>
+		[ImplementPropertyType("imagesList")]
+		public IEnumerable<IPublishedContent> ImagesList
+		{
+			get { return this.GetPropertyValue<IEnumerable<IPublishedContent>>("imagesList"); }
+		}
+	}
+
+	// Mixin content Type 1090 with alias "featuredItemsControls"
+	/// <summary>Featured Items Controls</summary>
+	public partial interface IFeaturedItemsControls : IPublishedContent
+	{
+		/// <summary>Featured Items</summary>
+		Archetype.Models.ArchetypeModel FeaturedItems { get; }
+	}
+
+	/// <summary>Featured Items Controls</summary>
+	[PublishedContentModel("featuredItemsControls")]
+	public partial class FeaturedItemsControls : PublishedContentModel, IFeaturedItemsControls
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "featuredItemsControls";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public FeaturedItemsControls(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<FeaturedItemsControls, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Featured Items: Enter the featured items to display in the feature section
+		///</summary>
+		[ImplementPropertyType("featuredItems")]
+		public Archetype.Models.ArchetypeModel FeaturedItems
+		{
+			get { return GetFeaturedItems(this); }
+		}
+
+		/// <summary>Static getter for Featured Items</summary>
+		public static Archetype.Models.ArchetypeModel GetFeaturedItems(IFeaturedItemsControls that) { return that.GetPropertyValue<Archetype.Models.ArchetypeModel>("featuredItems"); }
+	}
+
+	// Mixin content Type 1091 with alias "footerContentControls"
+	/// <summary>Footer Content Controls</summary>
+	public partial interface IFooterContentControls : IPublishedContent
+	{
+		/// <summary>Footer Content</summary>
+		IHtmlString FooterContent { get; }
+
+		/// <summary>Footer Social Links</summary>
+		Umbraco.Web.Models.RelatedLinks FooterSocialLinks { get; }
+
+		/// <summary>Footer Title</summary>
+		string FooterTitle { get; }
+	}
+
+	/// <summary>Footer Content Controls</summary>
+	[PublishedContentModel("footerContentControls")]
+	public partial class FooterContentControls : PublishedContentModel, IFooterContentControls
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "footerContentControls";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public FooterContentControls(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<FooterContentControls, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Footer Content
+		///</summary>
+		[ImplementPropertyType("footerContent")]
+		public IHtmlString FooterContent
+		{
+			get { return GetFooterContent(this); }
+		}
+
+		/// <summary>Static getter for Footer Content</summary>
+		public static IHtmlString GetFooterContent(IFooterContentControls that) { return that.GetPropertyValue<IHtmlString>("footerContent"); }
+
+		///<summary>
+		/// Footer Social Links
+		///</summary>
+		[ImplementPropertyType("footerSocialLinks")]
+		public Umbraco.Web.Models.RelatedLinks FooterSocialLinks
+		{
+			get { return GetFooterSocialLinks(this); }
+		}
+
+		/// <summary>Static getter for Footer Social Links</summary>
+		public static Umbraco.Web.Models.RelatedLinks GetFooterSocialLinks(IFooterContentControls that) { return that.GetPropertyValue<Umbraco.Web.Models.RelatedLinks>("footerSocialLinks"); }
+
+		///<summary>
+		/// Footer Title
+		///</summary>
+		[ImplementPropertyType("footerTitle")]
+		public string FooterTitle
+		{
+			get { return GetFooterTitle(this); }
+		}
+
+		/// <summary>Static getter for Footer Title</summary>
+		public static string GetFooterTitle(IFooterContentControls that) { return that.GetPropertyValue<string>("footerTitle"); }
 	}
 
 	/// <summary>Folder</summary>
