@@ -481,13 +481,16 @@
     <Content Include="Views\Partials\Content\_HomeHeader.cshtml" />
     <Content Include="Views\Partials\Content\_Intro.cshtml" />
     <Content Include="Views\Partials\Content\_Features.cshtml" />
-    <Content Include="Views\Partials\Content\_Testimonial.cshtml" />
+    <Content Include="Views\Partials\Content\_Testimonials.cshtml" />
     <Content Include="Views\Partials\Content\_FunData.cshtml" />
     <Content Include="Views\Partials\Content\_Invitation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Models\FeaturedItem.cs" />
+    <Compile Include="Models\FeaturesList.cs" />
+    <Compile Include="Models\TestimonialModel.cs" />
+    <Compile Include="Models\TestimonialsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -37,5 +37,33 @@ namespace TEC.Web.Controllers
 
             return PartialView(PartialViewPath("_Featured"), model);
         }
+
+
+        public ActionResult RenderFeatures()
+        {
+            List<FeaturesList> model = new List<FeaturesList>();
+            IPublishedContent homePage = CurrentPage.AncestorOrSelf("home");
+            ArchetypeModel featuresList = homePage.GetPropertyValue<ArchetypeModel>("featuresList");
+
+            foreach (ArchetypeFieldsetModel fieldset in featuresList)
+            {
+                string pageId = fieldset.GetValue<string>("link");
+                IPublishedContent linkedToPage = Umbraco.TypedContent(pageId);
+                string link = linkedToPage.Url;
+                //string link = fieldset.GetValue<IPublishedContent>("link").Url;
+                
+                var intro = fieldset.GetValue<string>("intro");
+
+                model.Add(new FeaturesList(fieldset.GetValue<string>("name"), intro, link
+                    ));
+            }
+
+            return PartialView(PartialViewPath("_Features"), model);
+        }
+
+        public ActionResult RenderTestimonials()
+        {
+            return PartialView(PartialViewPath("_Testimonials"));
+        }
     }
 }

@@ -6,6 +6,9 @@
 @{Html.RenderPartial("Content/_HomeHeader");}
 @*@{Html.RenderPartial("Content/_Intro");}*@
 @{ Html.RenderAction("RenderFeatured", "Home");}
-@{Html.RenderPartial("Content/_Testimonial");}
+@{ Html.RenderAction("RenderFeatures", "Home");}
+@*@{Html.RenderPartial("Content/_Features");}*@
+@{ Html.RenderAction("RenderTestimonials", "Home");}
+@*@{Html.RenderPartial("Content/_Testimonials");}*@
 @{Html.RenderPartial("Content/_FunData");}
 @{Html.RenderPartial("Content/_Invitation");}

@@ -1,11 +1,15 @@
-﻿@inherits UmbracoViewPage
+﻿
+@model TestimonialsModel
+@using TEC.Web.Models
+@using System.Collections.Generic;
 
 <div id="fh5co-testimonial" class="fh5co-bg-section">
     <div class="container">
         <div class="row animate-box row-pb-md">
             <div class="col-md-8 col-md-offset-2 text-left fh5co-heading">
-                <span>You deserved happiness</span>
-                <h2>Happy Clients</h2>
+                <span>YOU DESERVED HAPPINESS@*@Model.LightTitle*@</span>
+                <h2>Happy Clients@*@Model.Title*@</h2>
+                @*@Html.Raw(Model.Introduction)*@
                 <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
             </div>
         </div>
@@ -48,3 +52,23 @@
         </div>
     </div>
 </div>
+
+@*@helper RenderTestimonialItem()
+        {
+            <blockquote>
+                <p>&ldquo;@testimonial.Quote&rdquo;</p>
+                <p class="author"> <img src="@testimonial.ImageUrl" alt="Free HTML5 Bootstrap Template by gettemplates.co"> <cite>&mdash; @testimonial.Name</cite></p>
+            </blockquote>
+    }
+
+
+        @foreach (TestimonialModel testimonial in Model.Testimonials)
+        {
+
+            <<blockquote>
+                <p>&ldquo;@testimonial.Quote&rdquo;</p>
+                <p class="author"><img src="@testimonial.ImageUrl" alt="Free HTML5 Bootstrap Template by gettemplates.co"> <cite>&mdash; @testimonial.Name</cite></p>
+            </blockquote>
+
+        }
+*@

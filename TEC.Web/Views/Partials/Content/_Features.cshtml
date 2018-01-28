@@ -1,13 +1,15 @@
 ﻿@inherits UmbracoViewPage
+@inherits UmbracoViewPage<List<FeaturesList>>
+@using TEC.Web.Models
 
 <div id="fh5co-services" class="fh5co-bg-section border-bottom">
     <div class="container">
         <div class="row row-pb-md">
             <div class="col-md-8 col-md-offset-2 text-left animate-box" data-animate-effect="fadeInUp">
                 <div class="fh5co-heading">
-                    <span>We're expert</span>
-                    <h2>What We Do</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <span>@Umbraco.Field("featuresLightIntro")</span>
+                    <h2>@Umbraco.Field("featuresTitle")</h2>
+                    <p>@Umbraco.Field("featuresIntro")</p>
                 </div>
             </div>
         </div>
@@ -17,9 +19,7 @@
                     <span class="icon">
                         <i class="icon-eye"></i>
                     </span>
-                    <h3>Retina Ready</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p><a href="#">Learn more</a></p>
+                    @RenderFeaturesList(Model[0])
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 ">
@@ -27,9 +27,7 @@
                     <span class="icon">
                         <i class="icon-command"></i>
                     </span>
-                    <h3>Fully Responsive</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p><a href="#">Learn more</a></p>
+                    @RenderFeaturesList(Model[1])
                 </div>
             </div>
             <div class="clearfix visible-sm-block"></div>
@@ -38,22 +36,16 @@
                     <span class="icon">
                         <i class="icon-power"></i>
                     </span>
-                    <h3>Web Starter</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p><a href="#">Learn more</a></p>
+                    @RenderFeaturesList(Model[2])
                 </div>
             </div>
-
             <div class="clearfix visible-md-block"></div>
-
             <div class="col-md-4 col-sm-6 ">
                 <div class="feature-center animate-box" data-animate-effect="fadeInUp">
                     <span class="icon">
                         <i class="icon-eye"></i>
                     </span>
-                    <h3>Retina Ready</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p><a href="#">Learn more</a></p>
+                    @RenderFeaturesList(Model[3])
                 </div>
             </div>
             <div class="clearfix visible-sm-block"></div>
@@ -62,9 +54,7 @@
                     <span class="icon">
                         <i class="icon-command"></i>
                     </span>
-                    <h3>Fully Responsive</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p><a href="#">Learn more</a></p>
+                    @RenderFeaturesList(Model[4])
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 ">
@@ -72,14 +62,39 @@
                     <span class="icon">
                         <i class="icon-power"></i>
                     </span>
-                    <h3>Web Starter</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p><a href="#">Learn more</a></p>
+                    @RenderFeaturesList(Model[5])
                 </div>
             </div>
-
             <div class="clearfix visible-md-block"></div>
 
         </div>
     </div>
 </div>
+
+@helper RenderFeaturesList(FeaturesList item)
+    {
+
+            
+            <h3>@item.Name</h3>
+            <p> @item.Intro</p>
+            <p><a href="@item.Link">Learn more</a></p>
+
+
+
+        @*foreach (var item in Model)
+        {
+
+        @*<div class="col-md-4 col-sm-6 ">
+                <div class="feature-center animate-box" data-animate-effect="fadeInUp">
+                    <span class="icon">
+                        <i class="icon-eye"></i>
+                    </span>
+                    <h3>@item.Name</h3>
+                    <p>@item.Intro</p>
+                    <p><a href="@item.Link">Learn more</a></p>
+                </div>
+            </div>*@
+}
+
+
+}
